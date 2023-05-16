@@ -4,6 +4,12 @@
     name: eslint
     global: yes
 
+- name: Install emmet-ls
+  become: true
+  npm:
+    name: emmet-ls
+    global: yes
+
 - name: Install typescript server
   become: true
   npm:
