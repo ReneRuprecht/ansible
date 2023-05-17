@@ -19,7 +19,15 @@
     path: $HOME/powerlevel10k
   register: powerlevel10k 
 
-- name: install powerlevel10k
+- name: Install powerlevel10k
   shell: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
   when: powerlevel10k.stat.exists == false
 
+- name: Check old zsh config
+  stat:
+    path: $HOME/.zshrc
+  register: zshrc_config
+
+- name: Remove old zsh config
+  shell: rm $HOME/.zshrc
+  when: zshrc_config.stat.exists == true
