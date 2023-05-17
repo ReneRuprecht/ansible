@@ -6,7 +6,7 @@
 - name: Cloning dotfiles
   ansible.builtin.git:
     repo: 'https://github.com/ReneRuprecht/.dotfiles.git'
-    dest: '{{user_path}}/.dotfiles2'
+    dest: '{{user_path}}/.dotfiles'
     update: yes
     version: main
     accept_hostkey: yes 
