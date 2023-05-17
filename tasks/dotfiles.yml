@@ -12,5 +12,5 @@
     accept_hostkey: yes 
 
 - name: Stow files
-  shell: cd ~/.dotfiles2 && stow .
+  shell: cd ~/.dotfiles && stow .
   become_user: '{{user_name}}'
