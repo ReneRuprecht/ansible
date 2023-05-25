@@ -4,13 +4,13 @@
   apt:
     name: zsh
 
-- name: Check zsh file
+- name: Check .oh-my-zsh 
   stat:
     path: $HOME/.oh-my-zsh
   register: oh_my_stats
 
 - name: Install oh-my-zsh
-  shell: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > ~/.oh-my-installer && chmod +x ~/.oh-my-installer && ~/.oh-my-installer
+  shell: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > ~/.oh-my-zsh && chmod +x ~/.oh-my-zsh && ~/.oh-my-zsh
   when: oh_my_stats.stat.exists == false
   become_user: "{{user_name}}"
 
