@@ -18,3 +18,10 @@
   shell: python3 $HOME/Downloads/catppuccin-terminal-install.py
   tags:
     - gnome
+
+- name: Remove catppuccin terminal theme installer
+  ansible.builtin.file:
+    state: absent
+    path: "$HOME/Downloads/catppuccin-terminal-install.py" 
+  tags:
+    - gnome

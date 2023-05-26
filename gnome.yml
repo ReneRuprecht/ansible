@@ -1,7 +1,11 @@
 ---
 - hosts: localhost
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter username"
+      private: false
+
   vars:
-    user_name: 'rene'
     user_path: /home/{{user_name}}  
 
   tasks:
