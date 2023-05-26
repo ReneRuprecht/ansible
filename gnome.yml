@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  vars:
+    user_name: 'rene'
+    user_path: /home/{{user_name}}  
+
+  tasks:
+    - include: tasks/gnome-theme.yml

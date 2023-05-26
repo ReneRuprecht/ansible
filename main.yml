@@ -1,10 +1,14 @@
 ---
 - hosts: localhost
+
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter username"
+      private: false
+
   vars:
-    user_name: 'rene'
     user_path: /home/{{user_name}}  
 
-# git section
   pre_tasks:
     - name: update apt
       become: true
@@ -12,6 +16,7 @@
         force_apt_get: true
         update_cache: true
         state: present
+
     - name: install curl
       become: true
       apt:

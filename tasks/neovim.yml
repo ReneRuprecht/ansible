@@ -9,24 +9,34 @@
       - gcc
       - ninja-build
       - gettext
+  tags:
+    - neovim
 
 - name: Remove old neovim
   ansible.builtin.file:
     state: absent
     path: "{{user_path}}/neovim" 
   become: true
+  tags:
+    - neovim
 
 - name: clone neovim
   ansible.builtin.git:
     repo: "https://github.com/neovim/neovim.git"
     dest: "{{user_path}}/neovim"
   become_user: "{{user_name}}"
+  tags:
+    - neovim
 
 - name: Make neovim
   shell: cd {{user_path}}/neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
   become_user: "{{user_name}}"
+  tags:
+    - neovim
 
 - name: Install neovim
   shell: cd {{user_path}}/neovim && git checkout stable &&  make install
   become: true
+  tags:
+    - neovim
 

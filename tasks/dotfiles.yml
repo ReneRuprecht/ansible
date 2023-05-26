@@ -2,11 +2,15 @@
   apt:
     name: stow
   become: true
+  tags:
+    - dotfiles
 
 - name: Check dotfiles folder
   stat:
     path: "{{user_path}}/.dotfiles"
   register: dotfiles
+  tags:
+    - dotfiles
 
 - name: Delete old dotfiles
   ansible.builtin.file:
@@ -14,6 +18,8 @@
     path: "{{user_path}}/.dotfiles"
   become: true
   when: dotfiles.stat.exists == true
+  tags:
+    - dotfiles
 
 - name: Cloning dotfiles
   ansible.builtin.git:
@@ -22,7 +28,11 @@
     update: yes
     version: main
     accept_hostkey: yes 
+  tags:
+    - dotfiles
 
 - name: Stow files
   shell: cd ~/.dotfiles && stow .
   become_user: '{{user_name}}'
+  tags:
+    - dotfiles

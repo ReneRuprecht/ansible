@@ -3,44 +3,71 @@
   become: true
   apt:
     name: zsh
+  tags:
+    - zsh
+
+- name: Set zsh shell
+  user:
+    name: "{{user_name}}"
+    shell: "/bin/zsh"
+    state: present
+  become: yes
+  tags:
+    - zsh
 
 - name: Check .oh-my-installer
   stat:
     path: $HOME/.oh-my-installer
   register: oh_my_stats
+  tags:
+    - zsh
 
 - name: Install oh-my-zsh
   shell: curl -L https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh > ~/.oh-my-installer && chmod +x ~/.oh-my-installer && ~/.oh-my-installer
   when: oh_my_stats.stat.exists == false
   become_user: "{{user_name}}"
+  tags:
+    - zsh
 
 - name: Check p10k.zsh
   stat:
     path: $HOME/.p10k.zsh
   register: p10k
+  tags:
+    - zsh
 
 - name: Remove old p10k
   ansible.builtin.file:
     state: absent
     path: $HOME/.p10k.zsh
   when: p10k.stat.exists == true
+  tags:
+    - zsh
 
 - name: Check powerlevel10k exists
   stat:
     path: $HOME/.oh-my-zsh/custom/themes/powerlevel10k
   register: powerlevel10k
+  tags:
+    - zsh
 
 - name: Install powerlevel10k
   shell: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
   when: powerlevel10k.stat.exists == false
+  tags:
+    - zsh
 
 - name: Check old zsh config
   stat:
     path: $HOME/.zshrc
   register: zshrc_config
+  tags:
+    - zsh
 
 - name: Remove old zsh config
   ansible.builtin.file:
     state: absent
     path: $HOME/.zshrc
   when: zshrc_config.stat.exists == true
+  tags:
+    - zsh

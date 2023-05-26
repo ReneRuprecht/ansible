@@ -1,0 +1,20 @@
+- name: Check catppuccin terminal theme installer
+  stat:
+    path: $HOME/Downloads/catppuccin-terminal-install.py
+  register: catppuccin_terminal
+  tags:
+    - gnome
+
+- name: Download catppuccin terminal theme
+  get_url:
+    url: https://raw.githubusercontent.com/catppuccin/gnome-terminal/v0.2.0/install.py
+    dest: /$HOME/Downloads/catppuccin-terminal-install.py
+  become_user: "{{user_name}}"
+  when: catppuccin_terminal.stat.exists == false
+  tags:
+    - gnome
+
+- name: Install catpuccin terminal theme
+  shell: python3 $HOME/Downloads/catppuccin-terminal-install.py
+  tags:
+    - gnome

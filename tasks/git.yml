@@ -2,15 +2,21 @@
   become: true
   apt:
     name: git 
+  tags:
+    - git
 
 - name: Git setup email
   git_config:
     name: user.email
     scope: global
     value: "rene.ruprecht.396@gmail.com"
+  tags:
+    - git
 
 - name: Git setup name
   git_config:
     name: user.name
     scope: global
     value: "ReneRuprecht"
+  tags:
+    - git
