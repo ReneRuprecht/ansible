@@ -14,14 +14,8 @@
   when: oh_my_stats.stat.exists == false
   become_user: "{{user_name}}"
 
-- name: Check powerlevel10k
-  stat:
-    path: $HOME/powerlevel10k
-  register: powerlevel10k 
-
 - name: Install powerlevel10k
-  shell: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
-  when: powerlevel10k.stat.exists == false
+  shell: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 - name: Check old zsh config
   stat:
