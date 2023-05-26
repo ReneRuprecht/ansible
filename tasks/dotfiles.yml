@@ -3,6 +3,18 @@
     name: stow
   become: true
 
+- name: Check dotfiles folder
+  stat:
+    path: "{{user_path}}/.dotfiles"
+  register: dotfiles
+
+- name: Delete old dotfiles
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/.dotfiles"
+  become: true
+  when: dotfiles.stat.exists == true
+
 - name: Cloning dotfiles
   ansible.builtin.git:
     repo: 'https://github.com/ReneRuprecht/.dotfiles.git'

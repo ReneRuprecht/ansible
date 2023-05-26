@@ -11,7 +11,9 @@
       - gettext
 
 - name: Remove old neovim
-  shell: rm -rf {{user_path}}/neovim
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/neovim" 
   become: true
 
 - name: clone neovim

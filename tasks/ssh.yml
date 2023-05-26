@@ -1,0 +1,33 @@
+# ssh section
+- name: Ensure .ssh directory exists.
+  file:
+    dest: $HOME/.ssh/
+    mode: 0700
+    state: directory
+  tags:
+    - ssh
+
+- name: check if rsa key exsists
+  stat:
+    path: $HOME/.ssh/id_rsa
+  register:
+    rsa_key
+
+- name: generate rsa key
+  shell: ssh-keygen -b 4096 -t rsa -f "$HOME/.ssh/id_rsa" -N "" -C "{{user_name}}"
+  when: rsa_key.stat.exists == false
+  tags:
+    - ssh
+
+- name: Put key into authorized_keys    
+  shell: cat "$HOME/.ssh/id_rsa.pub" >> "$HOME/.ssh/authorized_keys"
+  tags:
+    - ssh
+
+- name: Ensure authorized_keys is 0700
+  file:
+    dest: $HOME/.ssh/authorized_keys
+    mode: 0700
+    state: file
+  tags:
+    - ssh

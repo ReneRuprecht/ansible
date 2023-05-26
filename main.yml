@@ -17,6 +17,7 @@
       apt:
         name: curl
   tasks:
+    - include: tasks/ssh.yml
     - include: tasks/git.yml
     - include: tasks/fonts.yml
     - include: tasks/zsh.yml

@@ -4,15 +4,28 @@
   apt:
     name: tmux 
 
+- name: Check tmux.conf
+  stat:
+    path: $HOME/.tmux.conf
+  register: tmux_conf
+    
+- name: Delete old plugin manager
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/.tmux.conf"
+  when: tmux_conf.stat.exists == true
+
 - name: Check tmux plugin installed
   stat:
     path: $HOME/.tmux/plugins/tpm
-  register: tmux_plugin_manager_stats
+  register: tmux_plugin_manager
 
 - name: Delete old plugin manager
-  shell: rm -r {{user_path}}/.tmux/plugins/tpm
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/.tmux/plugins/tpm"
   become: true
-  when: tmux_plugin_manager_stats.stat.exists == true
+  when: tmux_plugin_manager.stat.exists == true
 
 - name: Install tmux plugin manager
   ansible.builtin.git:

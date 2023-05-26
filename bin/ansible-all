@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+ANSIBLE_DIR="$HOME/ansible"
+
+if ! dpkg -s ansible > /dev/null; then
+	sudo apt-get install ansible -y
+fi
+
+
+ansible-playbook --diff "$ANSIBLE_DIR/main.yml" --ask-become-pass
