@@ -5,6 +5,14 @@
   tags:
     - git
 
+- name: Git setup editor to nvim
+  git_config:
+    name: core.editor
+    scope: global
+    value: "nvim"
+  tags:
+    - git
+
 - name: Git setup email
   git_config:
     name: user.email
