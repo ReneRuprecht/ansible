@@ -41,3 +41,20 @@
   tags:
     - neovim
 
+- name: Install ripgrep
+  apt:
+    name:
+      - ripgrep
+  become: true
+  tags:
+    - telescope
+    - neovim
+
+- name: Install fd
+  apt:
+    name:
+      - fd-find
+  become: true
+  tags:
+    - telescope
+    - neovim

@@ -3,21 +3,37 @@
   npm:
     name: eslint
     global: yes
+  tags:
+    - npm-packages
 
 - name: Install emmet-ls
   become: true
   npm:
     name: emmet-ls
     global: yes
+  tags:
+    - npm-packages
 
 - name: Install typescript server
   become: true
   npm:
     name: typescript-language-server
     global: yes
+  tags:
+    - npm-packages
 
 - name: Install typescript
   become: true
   npm:
     name: typescript
     global: yes
+  tags:
+    - npm-packages
+
+- name: Install npm neovim
+  become: true
+  npm:
+    name: neovim
+    global: yes
+  tags:
+    - npm-packages

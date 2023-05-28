@@ -29,6 +29,7 @@
     - include: tasks/node.yml 
     - include: tasks/node-packages.yml
     - include: tasks/neovim.yml
+    - include: tasks/python.yml
     - include: tasks/tmux.yml
     - include: tasks/docker.yml
     - include: tasks/dotfiles.yml
