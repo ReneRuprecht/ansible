@@ -41,6 +41,14 @@
   tags:
     - neovim
 
+- name: Remove neovim installer directory
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/neovim" 
+  become: true
+  tags:
+    - neovim
+
 - name: Install ripgrep
   apt:
     name:
@@ -57,4 +65,30 @@
   become: true
   tags:
     - telescope
+    - neovim
+
+- name: Create nvim custom debugger directory
+  ansible.builtin.file:
+    path: ~/.local/share/nvim/custom/debugger
+    state: directory
+    mode: '0755'
+  tags:
+    - neovim
+
+- name: Clone php-debug
+  ansible.builtin.git:
+    repo: "https://github.com/xdebug/vscode-php-debug.git"
+    dest: "{{user_path}}/vscode-php-debug"
+  become_user: "{{user_name}}"
+  tags:
+    - neovim
+
+- name: Build & install vscode-php-debug
+  shell: cd {{user_path}}/vscode-php-debug && npm install && npm run build
+  tags:
+    - neovim
+
+- name: Move vscode-php-debug into nvim custom debugger folder
+  shell: mv {{user_path}}/vscode-php-debug {{user_path}}/.local/share/nvim/custom/debugger/ 
+  tags:
     - neovim
