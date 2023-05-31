@@ -13,7 +13,7 @@
     url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf 
     dest: '{{user_path}}/.fonts/MensloNFRegular.ttf'
   tags:
-    - fonts-test
+    - fonts
     - zsh
 
 - name: Install bold
@@ -22,7 +22,7 @@
     url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf 
     dest: '{{user_path}}/.fonts/MensloNFBold.ttf'
   tags:
-    - fonts-test
+    - fonts
     - zsh
 
 - name: Install italic
@@ -31,7 +31,7 @@
     url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf 
     dest: '{{user_path}}/.fonts/MensloNFItalic.ttf'
   tags:
-    - fonts-test
+    - fonts
     - zsh
 
 - name: Install Bold Italic
@@ -40,5 +40,5 @@
     url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf 
     dest: '{{user_path}}/.fonts/MensloNFBoldItalic.ttf'
   tags:
-    - fonts-test
+    - fonts
     - zsh
