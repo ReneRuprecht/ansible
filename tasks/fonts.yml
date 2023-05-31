@@ -1,76 +1,44 @@
-# font section
-- name: Check fonts folder
-  stat:
+- name: Create fonts folder
+  ansible.builtin.file:
     path: $HOME/.fonts/
-  register: fonts_dir
-  tags:
-    - fonts
-    - zsh
-
-- name: Make fonts folder
-  shell: mkdir $HOME/.fonts 
-  when: fonts_dir.stat.exists == false
-  tags:
-    - fonts
-    - zsh
-
-- name: Check regular
-  stat:
-    path: $HOME/.fonts/MensloNFRegular.ttf
-  register: menslo_regular
+    state: directory
+    mode: '0755'
   tags:
     - fonts
     - zsh
 
 - name: Install regular
-  shell: wget -O $HOME/.fonts/MensloNFRegular.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf 
-  when: menslo_regular.stat.exists == false
+  become: true
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf 
+    dest: '{{user_path}}/.fonts/MensloNFRegular.ttf'
   tags:
-    - fonts
-    - zsh
-
-- name: Check bold
-  stat:
-    path: $HOME/.fonts/MensloNFBold.ttf
-  register: menslo_bold
-  tags:
-    - fonts
+    - fonts-test
     - zsh
 
 - name: Install bold
-  shell: wget -O $HOME/.fonts/MensloNFBold.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf 
-  when: menslo_bold.stat.exists == false
+  become: true
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf 
+    dest: '{{user_path}}/.fonts/MensloNFBold.ttf'
   tags:
-    - fonts
-    - zsh
-
-- name: Check italic
-  stat:
-    path: $HOME/.fonts/MensloNFItalic.ttf
-  register: menslo_italic
-  tags:
-    - fonts
+    - fonts-test
     - zsh
 
 - name: Install italic
-  shell: wget -O $HOME/.fonts/MensloNFItalic.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf 
-  when: menslo_italic.stat.exists == false
+  become: true
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf 
+    dest: '{{user_path}}/.fonts/MensloNFItalic.ttf'
   tags:
-    - fonts
-    - zsh
-
-- name: Check bold italic
-  stat:
-    path: $HOME/.fonts/MensloNFBoldItalic.ttf
-  register: menslo_bold_italic
-  tags:
-    - fonts
+    - fonts-test
     - zsh
 
 - name: Install Bold Italic
-  shell: wget -O $HOME/.fonts/MensloNFBoldItalic.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf 
-  when: menslo_bold_italic.stat.exists == false
+  become: true
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf 
+    dest: '{{user_path}}/.fonts/MensloNFBoldItalic.ttf'
   tags:
-    - fonts
+    - fonts-test
     - zsh
-
