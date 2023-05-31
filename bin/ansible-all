@@ -8,4 +8,4 @@ if ! dpkg -s ansible > /dev/null; then
 fi
 
 
-ansible-playbook --diff "$ANSIBLE_DIR/main.yml" --ask-become-pass
+ansible-playbook --diff "$ANSIBLE_DIR/main.yml"
