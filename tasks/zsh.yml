@@ -22,7 +22,6 @@
   become: true
   tags:
     - zsh
-    - test
 
 - name: Download oh-my-zsh installer
   become: true
@@ -31,7 +30,7 @@
     dest: '{{user_path}}/.oh-my-installer'
     mode: a+x
   tags:
-    - test
+    - zsh
 
 - name: Remove old oh-my-zsh
   ansible.builtin.file:
@@ -40,14 +39,12 @@
   become: true
   tags:
     - zsh
-    - test
 
 - name: Install oh-my-zsh
   shell: $HOME/.oh-my-installer
   become_user: "{{user_name}}"
   tags:
     - zsh
-    - test
 
 - name: Remove old p10k
   ansible.builtin.file:
@@ -56,7 +53,6 @@
   become: true
   tags:
     - zsh
-    - test
 
 - name: Remove old powerlevel10k
   ansible.builtin.file:
@@ -65,7 +61,6 @@
   become: true
   tags:
     - zsh
-    - test
 
 
 - name: Install powerlevel10k
@@ -80,4 +75,3 @@
   become: true
   tags:
     - zsh
-    - test
