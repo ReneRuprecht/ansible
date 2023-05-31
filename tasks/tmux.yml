@@ -11,7 +11,7 @@
     state: absent
     path: "{{user_path}}/.tmux.conf"
   tags:
-    - test
+    - tmux
 
 - name: Delete old plugin manager
   ansible.builtin.file:
