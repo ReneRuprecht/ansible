@@ -41,14 +41,6 @@
   tags:
     - neovim
 
-- name: Remove neovim installer directory
-  ansible.builtin.file:
-    state: absent
-    path: "{{user_path}}/neovim" 
-  become: true
-  tags:
-    - neovim
-
 - name: Install ripgrep
   apt:
     name:

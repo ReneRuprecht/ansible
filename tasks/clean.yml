@@ -1,0 +1,15 @@
+- name: Remove oh-my-installer
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/.oh-my-installer" 
+  become: true
+  tags:
+    - clean
+
+- name: Remove neovim installer directory
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/neovim" 
+  become: true
+  tags:
+    - clean

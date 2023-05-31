@@ -15,59 +15,69 @@
   tags:
     - zsh
 
-- name: Check .oh-my-installer
-  stat:
-    path: $HOME/.oh-my-installer
-  register: oh_my_stats
+- name: Remove old zshrc
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/.zshrc" 
+  become: true
   tags:
     - zsh
+    - test
+
+- name: Download oh-my-zsh installer
+  become: true
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: '{{user_path}}/.oh-my-installer'
+    mode: a+x
+  tags:
+    - test
+
+- name: Remove old oh-my-zsh
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/.oh-my-zsh" 
+  become: true
+  tags:
+    - zsh
+    - test
 
 - name: Install oh-my-zsh
-  shell: curl -L https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh > ~/.oh-my-installer && chmod +x ~/.oh-my-installer && ~/.oh-my-installer
-  when: oh_my_stats.stat.exists == false
+  shell: $HOME/.oh-my-installer
   become_user: "{{user_name}}"
   tags:
     - zsh
-
-- name: Check p10k.zsh
-  stat:
-    path: $HOME/.p10k.zsh
-  register: p10k
-  tags:
-    - zsh
+    - test
 
 - name: Remove old p10k
   ansible.builtin.file:
     state: absent
     path: $HOME/.p10k.zsh
-  when: p10k.stat.exists == true
+  become: true
   tags:
     - zsh
+    - test
 
-- name: Check powerlevel10k exists
-  stat:
+- name: Remove old powerlevel10k
+  ansible.builtin.file:
+    state: absent
     path: $HOME/.oh-my-zsh/custom/themes/powerlevel10k
-  register: powerlevel10k
+  become: true
   tags:
     - zsh
+    - test
+
 
 - name: Install powerlevel10k
   shell: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-  when: powerlevel10k.stat.exists == false
   tags:
     - zsh
 
-- name: Check old zsh config
-  stat:
-    path: $HOME/.zshrc
-  register: zshrc_config
-  tags:
-    - zsh
-
-- name: Remove old zsh config
+- name: Remove old zshrc
   ansible.builtin.file:
     state: absent
-    path: $HOME/.zshrc
-  when: zshrc_config.stat.exists == true
+    path: "{{user_path}}/.zshrc" 
+  become: true
   tags:
     - zsh
+    - test
