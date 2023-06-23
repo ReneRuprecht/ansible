@@ -13,3 +13,11 @@
   become: true
   tags:
     - clean
+
+- name: Remove old vscode deb file
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/Downloads/vscode.deb"
+  become: true
+  tags:
+    - clean

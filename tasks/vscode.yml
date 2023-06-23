@@ -1,0 +1,22 @@
+- name: Remove old vscode deb file
+  ansible.builtin.file:
+    state: absent
+    path: "{{user_path}}/Downloads/vscode.deb"
+  become: true
+  tags:
+    - vscode
+
+- name: Download vscode deb file
+  get_url:
+    url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+    dest: /$HOME/Downloads/vscode.deb
+  become_user: "{{user_name}}"
+  tags:
+    - vscode
+
+- name: Install vscode deb file
+  become: true
+  ansible.builtin.apt:
+    deb: "{{user_path}}/Downloads/vscode.deb"
+  tags:
+    - vscode

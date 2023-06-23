@@ -33,4 +33,5 @@
     - include: tasks/tmux.yml
     - include: tasks/docker.yml
     - include: tasks/dotfiles.yml
+    - include: tasks/vscode.yml
     - include: tasks/clean.yml
