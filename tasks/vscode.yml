@@ -20,3 +20,17 @@
     deb: "{{user_path}}/Downloads/vscode.deb"
   tags:
     - vscode
+
+- name: Install vscode extensions
+  ansible.builtin.shell: "code --install-extension {{item}}"
+  loop:
+    - "silofy.hackthebox"
+    - "Catppuccin.catppuccin-vsc"
+    - "yzhang.markdown-all-in-one"
+    - "ms-vscode-remote.vscode-remote-extensionpack"
+    - "vscode-icons-team.vscode-icons"
+    - "VisualStudioExptTeam.vscodeintellicode" 
+    - "ms-azuretools.vscode-docker"
+  tags:
+    - vscode
+    - vscode-ext
