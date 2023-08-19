@@ -35,3 +35,4 @@
     - include: tasks/dotfiles.yml
     - include: tasks/vscode.yml
     - include: tasks/clean.yml
+    - include: tasks/virtual.yml

@@ -1,0 +1,45 @@
+- name: Install qemu/kvm
+  apt:
+    name:
+      - qemu-kvm 
+      - virt-manager 
+      - virtinst 
+      - libvirt-clients 
+      - bridge-utils 
+      - libvirt-daemon-system 
+  become: true
+  tags:
+    - virtual
+
+- name: Enable service libvirtd
+  ansible.builtin.systemd:
+    name: libvirtd
+    enabled: true
+    masked: no
+  tags:
+    - virtual
+
+- name: Make sure libvirtd is running
+  ansible.builtin.systemd:
+    state: started
+    name: libvirtd
+  tags:
+    - virtual
+
+- name: Adding user to group kvm
+  become: true
+  user:
+    name: '{{ user_name }}'
+    groups: kvm
+    append: yes
+  tags:
+    - virtual
+
+- name: Adding user to group libvirt
+  become: true
+  user:
+    name: '{{ user_name }}'
+    groups: libvirt
+    append: yes
+  tags:
+    - virtual
