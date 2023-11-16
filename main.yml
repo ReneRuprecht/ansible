@@ -8,6 +8,7 @@
 
   vars:
     user_path: /home/{{user_name}}  
+    NODEJS_VERSION: "20"
 
   pre_tasks:
     - name: update apt

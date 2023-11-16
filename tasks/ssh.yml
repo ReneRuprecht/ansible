@@ -12,6 +12,8 @@
     path: $HOME/.ssh/id_rsa
   register:
     rsa_key
+  tags:
+    - ssh
 
 - name: generate rsa key
   shell: ssh-keygen -b 4096 -t rsa -f "$HOME/.ssh/id_rsa" -N "" -C "{{user_name}}"

@@ -1,5 +1,25 @@
-- name: Update node package deb to v18
-  shell:  curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+- name: Download nodesource gpg key
+  become: true
+  ansible.builtin.get_url:
+    url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
+    dest: /etc/apt/keyrings/nodesource.gpg.key
+    mode: '0644'
+  tags:
+    - node
+
+- name: Setup gpg key
+  become: true
+  ansible.builtin.shell:
+    cmd: gpg --yes --dearmor  -o /etc/apt/keyrings/nodesource.gpg /etc/apt/keyrings/nodesource.gpg.key
+  tags:
+    - node
+      
+- name: Install the nodejs LTS repos
+  become: true
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_{{ NODEJS_VERSION }}.x nodistro main"
+    state: present
+    update_cache: yes
   tags:
     - node
 
@@ -9,4 +29,12 @@
     name:
       - nodejs
   tags:
+    - node
+
+- name: Clean tmp gpg file
+  become: true
+  ansible.builtin.file:
+    path: /etc/apt/keyrings/nodesource.gpg.key
+    state: absent
+  tags: 
     - node
