@@ -1,0 +1,12 @@
+---
+- name: Install qemu/kvm
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop: "{{ virtual_packages }}"
+
+- name: Start And Enable libvirtd
+  ansible.builtin.service:
+    name: libvirtd
+    state: started
+    enabled: true

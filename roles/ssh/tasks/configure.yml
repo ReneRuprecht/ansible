@@ -1,0 +1,37 @@
+---
+- name: Ensure .ssh Directory Exists.
+  ansible.builtin.file:
+    dest: ~/.ssh/
+    mode: "0700"
+    state: directory
+
+- name: Check If RSA Key Exsists
+  ansible.builtin.stat:
+    path: ~/.ssh/id_rsa
+  register: rsa_key
+
+- name: Generate RSA Key
+  when: not rsa_key.stat.exists
+  ansible.builtin.openssh_keypair:
+    path: "~/.ssh/{{ ssh_key_name }}"
+    type: "{{ ssh_key_type }}"
+    size: "{{ ssh_key_size }}"
+    state: "{{ ssh_key_state | default('present') }}"
+    force: "{{ ssh_key_force | default('no') }}"
+
+- name: Put Key Into authorized_keys
+  when: not rsa_key.stat.exists
+  block:
+    - name: Register Key
+      ansible.builtin.command:
+        cmd: cat ~/.ssh/{{ ssh_key_name }}.pub
+      register: ssh_key_public_output
+      changed_when: false
+
+    - name: Append Pub Key
+      ansible.builtin.lineinfile:
+        path: ~/.ssh/authorized_keys
+        line: "{{ ssh_key_public_output.stdout }}"
+        create: true
+        mode: "0700"
+      changed_when: false

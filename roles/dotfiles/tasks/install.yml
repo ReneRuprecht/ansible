@@ -1,0 +1,37 @@
+- name: Install Required Packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ dotfiles_required_packages }}"
+
+- name: Check Dotfiles Folder
+  ansible.builtin.stat:
+    path: "~/.dotfiles"
+  register: dotfiles
+
+- name: Delete Old Dotfiles
+  become: true
+  ansible.builtin.file:
+    state: absent
+    path: "/home/{{ ansible_user }}/.dotfiles"
+  when:
+    - dotfiles.stat.exists
+    - dotfiles_force_reinstall
+
+- name: Cloning Dotfiles
+  ansible.builtin.git:
+    repo: "{{ dotfiles_repo_url }}"
+    dest: "~/.dotfiles"
+    update: true
+    version: main
+    accept_hostkey: true
+  when:
+    - dotfiles.stat.exists
+    - dotfiles_force_reinstall
+
+- name: Stow Dotfiles
+  ansible.builtin.command:
+    cmd: "stow ."
+    chdir: ~/.dotfiles
+  changed_when: false

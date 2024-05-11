@@ -1,0 +1,38 @@
+---
+- name: Remove old neovim
+  become: true
+  ansible.builtin.file:
+    state: absent
+    path: "/home/{{ ansible_user }}/neovim"
+
+- name: Clone Neovim
+  become: true
+  ansible.builtin.git:
+    repo: "{{ neovim_repo }}"
+    dest: "/home/{{ ansible_user }}/neovim"
+    force: true
+
+- name: Checkout Neovim
+  become: true
+  ansible.builtin.command:
+    cmd: "git checkout stable"
+  args:
+    chdir: "/home/{{ ansible_user }}/neovim"
+
+- name: Make Neovim
+  become: true
+  ansible.builtin.command:
+    cmd: "make CMAKE_BUILD_TYPE=RelWithDebInfo"
+    chdir: "/home/{{ ansible_user }}/neovim"
+
+- name: Install neovim
+  become: true
+  ansible.builtin.command:
+    cmd: "make install"
+  args:
+    chdir: "/home/{{ ansible_user }}/neovim"
+
+- name: Install Python Neovim
+  become: true
+  ansible.builtin.package:
+    name: python3-neovim

@@ -1,0 +1,14 @@
+---
+- name: Adding User To Group Kvm
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: kvm
+    append: true
+
+- name: Adding User To Group Libvirt
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: libvirt
+    append: true

@@ -1,0 +1,23 @@
+---
+- name: Remove old vscode deb file
+  become: true
+  ansible.builtin.file:
+    path: "{{ vscode_download_path }}/{{ vscode_install_file_name }}"
+    state: absent
+
+- name: Download Vscode Install File
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ vscode_install_file }}"
+    dest: "{{ vscode_download_path }}/{{ vscode_install_file_name }}"
+    mode: "0644"
+
+- name: Install Vscode
+  become: true
+  ansible.builtin.command:
+    cmd: "{{ vscode_install_command }} {{ vscode_download_path }}/{{ vscode_install_file_name }}"
+
+- name: Install Vscode Extensions
+  ansible.builtin.command: "code --install-extension {{ item }}"
+  loop: "{{ vscode_extensions }}"
+  changed_when: false

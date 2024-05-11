@@ -1,0 +1,11 @@
+---
+- name: Install NPM Packages
+  ansible.builtin.shell:
+    cmd: |
+      source ~/.nvm/nvm.sh
+      nvm use {{ node_version }}
+      npm install {{ item.name }} {% if item.global %} -g {% endif %}
+  args:
+    executable: /bin/bash
+  loop: "{{ node_npm_packages }}"
+  changed_when: false

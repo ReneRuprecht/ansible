@@ -1,0 +1,25 @@
+---
+- name: Check catppuccin terminal theme installer
+  ansible.builtin.stat:
+    path: $HOME/Downloads/catppuccin-terminal-install.py
+  register: catppuccin_terminal
+
+- name: Remove catppuccin terminal theme installer
+  ansible.builtin.file:
+    state: absent
+    path: "~/Downloads/catppuccin-terminal-install.py"
+  when:
+    - catppuccin_terminal.stat.exists
+    - terminal_theme_force_reinstall
+
+- name: Download catppuccin terminal theme
+  ansible.builtin.get_url:
+    url: "{{ terminal_theme_gnome_catppuccin_installer_url }}"
+    dest: ~/Downloads/catppuccin-terminal-install.py
+    mode: "0755"
+  when: not catppuccin_terminal.stat.exists
+
+- name: Install catpuccin terminal theme
+  ansible.builtin.command:
+    cmd: python3 ~/Downloads/catppuccin-terminal-install.py
+  changed_when: false

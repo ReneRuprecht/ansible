@@ -1,0 +1,6 @@
+---
+- name: Install Docker Requirements
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop: "{{ docker_requirements_packages }}"

@@ -1,0 +1,8 @@
+---
+# defaults file for git
+git_user:
+  name: ""
+  email: ""
+
+git_core:
+  editor: ""

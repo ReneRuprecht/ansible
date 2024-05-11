@@ -1,0 +1,6 @@
+---
+- name: Install Requirements
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop: "{{ neovim_required_packages }}"

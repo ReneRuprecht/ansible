@@ -1,0 +1,9 @@
+virtual_packages:
+  - qemu-kvm
+  - virt-manager
+  - virtinst
+  - libvirt-clients
+  - bridge-utils
+  - libvirt-daemon-system
+
+virtual_libvirtd_service: "libvirtd"

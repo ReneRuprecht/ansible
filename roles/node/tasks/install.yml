@@ -1,0 +1,26 @@
+---
+- name: Install Nvm
+  when: nvm_installed_version.rc != 0
+  block:
+    - name: Download Nvm Install
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/nvm-sh/nvm/{{ node_nvm_version }}/install.sh
+        dest: "{{ node_nvm_download_dest }}"
+        mode: "0755"
+
+    - name: Install Nvm
+      ansible.builtin.command:
+        cmd: "{{ node_nvm_download_dest }}"
+      changed_when: false
+
+- name: Install Node
+  when: node_installed_version.rc != 0
+  block:
+    - name: Install Node
+      ansible.builtin.shell:
+        cmd: |
+          source ~/.nvm/nvm.sh
+          nvm install {{ node_version }}
+      args:
+        executable: /bin/bash
+      changed_when: false

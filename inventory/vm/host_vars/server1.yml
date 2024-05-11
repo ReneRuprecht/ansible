@@ -1,0 +1,7 @@
+---
+git_user:
+  name: "test"
+  email: "test.email"
+
+git_core:
+  editor: "nvim"

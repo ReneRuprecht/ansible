@@ -1,0 +1,18 @@
+---
+- name: Include OS Vars
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include Install
+  ansible.builtin.include_tasks: "install.yml"
+
+- name: Include Configuration
+  ansible.builtin.include_tasks: "configure.yml"
+
+- name: Include Oh My Zsh
+  ansible.builtin.include_tasks: "oh_my_zsh.yml"
+
+- name: Include P10K Theme
+  ansible.builtin.include_tasks: "p10k.yml"
+
+- name: Include Fonts
+  ansible.builtin.include_tasks: "fonts.yml"

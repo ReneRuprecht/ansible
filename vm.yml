@@ -1,0 +1,15 @@
+- name: Install local
+  hosts:
+    - vm
+  roles:
+    - neovim
+    - tmux
+    - virtual
+    - vscode
+    - git
+    - node
+    - ssh
+    - zsh
+    - docker
+    - dotfiles
+    - terminal_theme

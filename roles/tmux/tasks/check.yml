@@ -1,0 +1,8 @@
+---
+- name: Check Tmux Installed
+  ansible.builtin.command:
+    cmd: "which tmux"
+  register: tmux_installed_version
+  changed_when: false
+  ignore_errors: true
+  no_log: true

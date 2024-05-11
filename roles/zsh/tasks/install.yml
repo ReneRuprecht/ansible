@@ -1,0 +1,6 @@
+---
+- name: Install Zsh
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop: "{{ zsh_packages }}"

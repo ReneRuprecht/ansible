@@ -1,0 +1,5 @@
+---
+# defaults file for zsh
+
+zsh_force_reinstall: false
+zsh_p10k_force_reinstall: false

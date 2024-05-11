@@ -1,0 +1,23 @@
+---
+- name: Install Tmux
+  become: true
+  ansible.builtin.package:
+    name: tmux
+  loop: "{{ tmux_packages }}"
+
+- name: Delete Old Plugin Manager
+  become: true
+  ansible.builtin.file:
+    state: absent
+    path: "/home/{{ ansible_user }}/.tmux.conf"
+
+- name: Delete Old Plugin Manager
+  become: true
+  ansible.builtin.file:
+    state: absent
+    path: "/home/{{ ansible_user }}/.tmux/plugins/tpm"
+
+- name: Install Tmux Plugin Manager
+  ansible.builtin.git:
+    repo: "{{ tmux_repo }}"
+    dest: "{{ tmux_plugin_manager_dest }}"

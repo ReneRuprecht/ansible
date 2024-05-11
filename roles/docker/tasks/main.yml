@@ -1,0 +1,13 @@
+---
+# tasks file for docker
+- name: Include OS Vars
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include Requirements
+  ansible.builtin.include_tasks: "requirements.yml"
+
+- name: Include Install
+  ansible.builtin.include_tasks: "{{ ansible_os_family | lower }}_install.yml"
+
+- name: Include Compose
+  ansible.builtin.include_tasks: "install_docker_compose.yml"

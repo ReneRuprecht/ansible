@@ -1,0 +1,3 @@
+---
+# vars file for tmux
+tmux_repo: "https://github.com/tmux-plugins/tpm"

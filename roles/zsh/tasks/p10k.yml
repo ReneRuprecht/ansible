@@ -1,0 +1,52 @@
+---
+- name: Check Old p10k
+  ansible.builtin.stat:
+    path: ~/.p10k.zsh
+  register: zsh_old_p10k
+
+- name: Remove old p10k
+  become: true
+  ansible.builtin.file:
+    state: absent
+    path: "/home/{{ ansible_user }}/.p10k.zsh"
+  when: >
+    zsh_p10k_force_reinstall
+
+- name: Check Old powerlevel10k
+  ansible.builtin.stat:
+    path: ~/.oh-my-zsh/custom/themes/powerlevel10k
+  register: zsh_old_powerlevel10k
+
+- name: Remove old powerlevel10k
+  become: true
+  ansible.builtin.file:
+    state: absent
+    path: $HOME/.oh-my-zsh/custom/themes/powerlevel10k
+  when: >
+    zsh_p10k_force_reinstall
+
+- name: Ensure Theme Directory Exists
+  ansible.builtin.file:
+    path: "~/.oh-my-zsh/custom/themes/powerlevel10k"
+    state: directory
+    mode: "0755"
+
+- name: Install powerlevel10k
+  ansible.builtin.git:
+    repo: "{{ zsh_powerlevel10k_git }}"
+    dest: "~/.oh-my-zsh/custom/themes/powerlevel10k"
+    depth: 1
+  changed_when: false
+  when: >
+    zsh_p10k_force_reinstall or
+    (not zsh_old_p10k.stat.exists and
+     not zsh_old_powerlevel10k.stat.exists)
+
+- name: Remove Old Zshrc
+  ansible.builtin.file:
+    state: absent
+    path: "~/.zshrc"
+  when: >
+    zsh_p10k_force_reinstall or
+    (not zsh_old_p10k.stat.exists and
+     not zsh_old_powerlevel10k.stat.exists)

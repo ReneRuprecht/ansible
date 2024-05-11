@@ -1,0 +1,8 @@
+---
+# defaults file for ssh
+
+ssh_key_name: "id_rsa"
+ssh_key_type: "rsa"
+ssh_key_size: "4096"
+ssh_key_state: "present"
+ssh_key_force: "no"

@@ -1,0 +1,5 @@
+---
+# tasks file for terminal_theme
+- name: Include Gnome Catppuccin
+  ansible.builtin.include_tasks: gnome_catppuccin.yml
+  when: terminal_theme_env == "gnome"

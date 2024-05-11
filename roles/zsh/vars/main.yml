@@ -1,0 +1,10 @@
+---
+zsh_fonts:
+  - url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf"
+    filename: "MensloNFRegular.ttf"
+  - url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf"
+    filename: "MensloNFBold.ttf"
+  - url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf"
+    filename: "MensloNFItalic.ttf"
+  - url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf"
+    filename: "MensloNFBoldItalic.ttf"

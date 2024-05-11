@@ -1,0 +1,24 @@
+---
+- name: Download oh-my-zsh Installer
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ zsh_oh_my_zsh_installer_url }}"
+    dest: "/home/{{ ansible_user }}/.oh-my-installer"
+    mode: a+x
+
+- name: Check old old oh-my-zsh
+  become: true
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_user }}/.oh-my-zsh"
+  register: zsh_old_oh_my_zsh
+
+- name: Install oh-my-zsh
+  ansible.builtin.shell:
+    cmd: echo "y" | "/home/{{ ansible_user }}/.oh-my-installer"
+  changed_when: false
+  when: not zsh_old_oh_my_zsh.stat.exists
+
+- name: Remove old zshrc
+  ansible.builtin.file:
+    state: absent
+    path: "/home/{{ ansible_user }}/.zshrc"

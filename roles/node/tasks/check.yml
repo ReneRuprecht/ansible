@@ -1,0 +1,25 @@
+---
+- name: Check Nvm Install
+  ansible.builtin.shell:
+    cmd: |
+      source ~/.nvm/nvm.sh
+      nvm -v
+  args:
+    executable: /bin/bash
+  register: nvm_installed_version
+  changed_when: false
+  ignore_errors: true
+  no_log: true
+
+- name: Check Node Install
+  ansible.builtin.shell:
+    cmd: |
+      source ~/.nvm/nvm.sh
+      nvm use
+      node -v
+  args:
+    executable: /bin/bash
+  register: node_installed_version
+  changed_when: false
+  ignore_errors: true
+  no_log: true

@@ -1,0 +1,13 @@
+---
+- name: Include OS Vars
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include Requirements
+  ansible.builtin.include_tasks: "requirements.yml"
+
+- name: Include Check
+  ansible.builtin.include_tasks: "check.yml"
+
+- name: Include Install
+  ansible.builtin.include_tasks: "install.yml"
+  when: neovim_installed_version.rc != 0

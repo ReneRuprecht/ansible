@@ -1,0 +1,5 @@
+---
+# vars file for terminal_theme
+terminal_theme_gnome_catppuccin_installer_url: "https://raw.githubusercontent.com/catppuccin/gnome-terminal/v0.2.0/install.py"
+terminal_theme_required_packages:
+  - "dconf-editor"

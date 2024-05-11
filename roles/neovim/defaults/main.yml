@@ -1,0 +1,5 @@
+---
+# defaults file for neovim
+neovim_force_reconfiguration: false
+
+neovim_path: "~/"

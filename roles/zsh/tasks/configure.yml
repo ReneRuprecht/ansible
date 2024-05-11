@@ -1,0 +1,25 @@
+---
+- name: Check old old oh-my-zsh
+  become: true
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_user }}/.oh-my-zsh"
+  register: zsh
+
+- name: Set zsh shell
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    shell: "/bin/zsh"
+    state: present
+  when: >
+    zsh_force_reinstall or
+    not zsh.stat.exists
+
+- name: Remove old zshrc
+  become: true
+  ansible.builtin.file:
+    state: absent
+    path: "{{ ansible_user }}/.zshrc"
+  when: >
+    zsh_force_reinstall or
+    not zsh.stat.exists

@@ -1,0 +1,10 @@
+---
+# tasks file for node
+- name: Include Check
+  ansible.builtin.include_tasks: "check.yml"
+
+- name: Include Install
+  ansible.builtin.include_tasks: "install.yml"
+
+- name: Include NPM Packages
+  ansible.builtin.include_tasks: "packages.yml"

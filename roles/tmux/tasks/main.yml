@@ -1,0 +1,10 @@
+---
+- name: Include OS Vars
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include Check
+  ansible.builtin.include_tasks: "check.yml"
+
+- name: Include Install
+  ansible.builtin.include_tasks: "install.yml"
+  when: tmux_installed_version.rc != 0

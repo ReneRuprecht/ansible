@@ -1,0 +1,32 @@
+---
+- name: Check Git Installed
+  ansible.builtin.command:
+    cmd: "which git"
+  register: git_installed
+  no_log: true
+  ignore_errors: true
+  changed_when: false
+
+- name: Check Git Name
+  ansible.builtin.command:
+    cmd: "git config user.name"
+  register: git_name_value
+  no_log: true
+  ignore_errors: true
+  changed_when: false
+
+- name: Check Git Email
+  ansible.builtin.command:
+    cmd: "git config user.email"
+  register: git_email_value
+  no_log: true
+  ignore_errors: true
+  changed_when: false
+
+- name: Check Git Editor
+  ansible.builtin.command:
+    cmd: "git config core.editor"
+  register: git_editor_value
+  no_log: true
+  ignore_errors: true
+  changed_when: false

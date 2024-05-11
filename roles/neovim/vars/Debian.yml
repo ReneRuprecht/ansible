@@ -1,0 +1,12 @@
+neovim_required_packages:
+  - cmake
+  - unzip
+  - make
+  - g++
+  - gcc
+  - ninja-build
+  - gettext
+  - xsel # for clipboard
+  - ripgrep
+  - fd-find
+  - git

@@ -1,0 +1,23 @@
+- name: Install local
+  vars:
+    # current user
+    ansible_user: "ansible"
+    git_user:
+      name: "test"
+      email: "test.email"
+    git_core:
+      editor: "nvim"
+  hosts:
+    - localhost
+  roles:
+    - neovim
+    - tmux
+    - virtual
+    - vscode
+    - git
+    - node
+    - ssh
+    - zsh
+    - docker
+    - dotfiles
+    - terminal_theme
