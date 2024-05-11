@@ -3,10 +3,9 @@
 vscode_force_reinstall: false
 
 vscode_extensions:
-  - "silofy.hackthebox"
   - "Catppuccin.catppuccin-vsc"
+  - "esbenp.prettier-vscode"
   - "yzhang.markdown-all-in-one"
   - "ms-vscode-remote.vscode-remote-extensionpack"
   - "vscode-icons-team.vscode-icons"
-  - "VisualStudioExptTeam.vscodeintellicode"
   - "ms-azuretools.vscode-docker"
