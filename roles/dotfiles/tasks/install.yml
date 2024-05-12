@@ -26,9 +26,9 @@
     update: true
     version: main
     accept_hostkey: true
-  when:
-    - dotfiles.stat.exists
-    - dotfiles_force_reinstall
+  when: >
+    not dotfiles.stat.exists or
+    dotfiles_force_reinstall
 
 - name: Stow Dotfiles
   ansible.builtin.command:
