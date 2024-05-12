@@ -7,6 +7,7 @@
       email: "test.email"
     git_core:
       editor: "nvim"
+    #terminal_theme_env: "gnome"
   hosts:
     - localhost
   roles:
