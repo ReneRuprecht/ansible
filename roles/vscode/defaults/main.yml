@@ -9,3 +9,4 @@ vscode_extensions:
   - "ms-vscode-remote.vscode-remote-extensionpack"
   - "vscode-icons-team.vscode-icons"
   - "ms-azuretools.vscode-docker"
+  - "vscodevim.vim"
