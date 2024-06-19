@@ -1,0 +1,4 @@
+---
+# vars file for rustlang
+rustlang_installer_url: "https://sh.rustup.rs"
+rustlang_installer_temp_dest: "/tmp/rustup.rs"

@@ -1,0 +1,22 @@
+---
+- name: Ensure clean install
+  become: true
+  ansible.builtin.file:
+    path: "{{ rustlang_installer_temp_dest }}"
+    state: absent
+
+- name: Download rustup
+  ansible.builtin.get_url:
+    url: "{{ rustlang_installer_url }}"
+    dest: "{{ rustlang_installer_temp_dest }}"
+    mode: "0755"
+
+- name: Install rustlang with default settings
+  ansible.builtin.command:
+    cmd: "{{ rustlang_installer_temp_dest }} -y"
+  changed_when: false
+
+- name: Ensure rustup is absent
+  ansible.builtin.file:
+    path: "{{ rustlang_installer_temp_dest }}"
+    state: absent
