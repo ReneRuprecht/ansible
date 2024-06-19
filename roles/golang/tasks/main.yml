@@ -1,0 +1,31 @@
+---
+- name: Ensure clean install
+  become: true
+  ansible.builtin.file:
+    path: "{{ golang_path }}"
+    state: absent
+
+- name: Download golang
+  ansible.builtin.get_url:
+    url: "{{ golang_installer_url }}"
+    dest: "{{ golang_installer_temp_dest }}"
+    mode: "0644"
+
+- name: Ensure directory exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ golang_install_path }}"
+    state: directory
+    mode: "0755"
+
+- name: Unzip golang
+  become: true
+  ansible.builtin.unarchive:
+    src: "{{ golang_installer_temp_dest }}"
+    dest: "{{ golang_install_path }}"
+    mode: "0755"
+
+- name: Ensure installer is absent
+  ansible.builtin.file:
+    path: "{{ golang_installer_temp_dest }}"
+    state: absent
