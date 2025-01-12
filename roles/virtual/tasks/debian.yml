@@ -1,4 +1,9 @@
 ---
+- name: Update
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+
 - name: Install qemu/kvm
   become: true
   ansible.builtin.package:

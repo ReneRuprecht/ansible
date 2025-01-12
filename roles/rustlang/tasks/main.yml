@@ -4,6 +4,7 @@
   ansible.builtin.file:
     path: "{{ rustlang_installer_temp_dest }}"
     state: absent
+  when: "'rust_clean_install' in ansible_run_tags"
 
 - name: Download rustup
   ansible.builtin.get_url:
@@ -14,9 +15,4 @@
 - name: Install rustlang with default settings
   ansible.builtin.command:
     cmd: "{{ rustlang_installer_temp_dest }} -y"
-  changed_when: false
-
-- name: Ensure rustup is absent
-  ansible.builtin.file:
-    path: "{{ rustlang_installer_temp_dest }}"
-    state: absent
+    creates: '~/.cargo/bin/rustc'
