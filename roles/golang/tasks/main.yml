@@ -24,8 +24,3 @@
     src: "{{ golang_installer_temp_dest }}"
     dest: "{{ golang_install_path }}"
     mode: "0755"
-
-- name: Ensure installer is absent
-  ansible.builtin.file:
-    path: "{{ golang_installer_temp_dest }}"
-    state: absent

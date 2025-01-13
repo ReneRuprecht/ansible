@@ -7,7 +7,7 @@
   ansible.builtin.include_tasks: "check.yml"
 
 - name: Include debian install
-  ansible.builtin.include_tasks: "debian.yml "
+  ansible.builtin.include_tasks: "debian.yml"
   when:
     - ansible_os_family | lower == 'debian'
     - virtual_kvm_installed_version.rc != 0
