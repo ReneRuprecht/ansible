@@ -1,6 +1,8 @@
 ---
 - name: Install Nvm
-  when: nvm_installed_version.rc != 0
+  when: 
+    - nvm_installed_version.rc != 0 or
+      nvm_installed_version.stdout != node_nvm_version
   block:
     - name: Download Nvm Install
       ansible.builtin.get_url:
@@ -14,7 +16,9 @@
       changed_when: false
 
 - name: Install Node
-  when: node_installed_version.rc != 0
+  when: 
+    - node_installed_version.rc != 0 or
+      node_installed_version.stdout != node_version
   block:
     - name: Install Node
       ansible.builtin.shell:
