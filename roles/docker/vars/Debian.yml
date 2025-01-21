@@ -11,6 +11,6 @@ docker_packages:
   - docker-buildx-plugin
   - docker-compose-plugin
 
-docker_gpg_keyring: "https://download.docker.com/linux/ubuntu/gpg"
+docker_gpg_keyring: "https://download.docker.com/linux/debian/gpg"
 
 docker_compose_url: "https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64"
