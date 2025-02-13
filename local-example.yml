@@ -1,18 +1,17 @@
 - name: Install local
   vars:
-    # current user
-    ansible_user: "ansible"
     git_user:
       name: "test"
-      email: "test.email"
+      email: "test.mail"
     git_core:
       editor: "nvim"
     virtual_users:
-      - "test"
-    # terminal_theme_env: "gnome"
+      - "{{ lookup('env', 'USER') }}"
+      # terminal_theme_env: "gnome"
   hosts:
     - localhost
   roles:
+    - general
     - neovim
     - tmux
     - virtual
@@ -20,7 +19,6 @@
     - git
     - node
     - golang
-    - ssh
     - zsh
     - docker
     - dotfiles

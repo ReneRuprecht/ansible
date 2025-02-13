@@ -1,33 +1,14 @@
 ---
-- name: Ensure Keyrings Dir Exists
+- name: Add Docker repository with deb822_repository
   become: true
-  ansible.builtin.file:
-    path: "/etc/apt/keyrings"
-    state: directory
-    mode: "0755"
-
-- name: Add docker.gpg to keyrings
-  become: true
-  ansible.builtin.shell:
-    cmd: "curl -fsSL {{ docker_gpg_keyring }} | gpg --dearmor -o /etc/apt/keyrings/docker.gpg"
-    creates: /etc/apt/keyrings/docker.gpg
-
-- name: Ensure docker.gpg is 0744
-  become: true
-  ansible.builtin.file:
-    dest: /etc/apt/keyrings/docker.gpg
-    mode: "0755"
-    state: file
-
-- name: Add Docker repository
-  become: true
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb [arch=amd64
-      signed-by=/etc/apt/keyrings/docker.gpg]
-      https://download.docker.com/linux/debian {{ ansible_lsb.codename }} stable
-    filename: docker
-    state: present
+  ansible.builtin.deb822_repository:
+    name: "docker"
+    types: deb
+    uris: "{{ docker_repo_url }}/{{ ansible_distribution | lower }}"
+    suites: "{{ ansible_distribution_release }}"
+    components: "{{ docker_release_channel }}"
+    signed_by: /etc/apt/keyrings/docker.asc
+    architectures: "{{ docker_arch }}"
 
 - name: Update apt
   become: true
@@ -45,6 +26,6 @@
 - name: Adding User To Group Docker
   become: true
   ansible.builtin.user:
-    name: "{{ ansible_user }}"
+    name: "{{ lookup('env', 'USER') }}"
     groups: docker
     append: true

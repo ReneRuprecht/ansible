@@ -1,6 +1,5 @@
 ---
 - name: Ensure clean install
-  become: true
   ansible.builtin.file:
     path: "{{ rustlang_installer_temp_dest }}"
     state: absent

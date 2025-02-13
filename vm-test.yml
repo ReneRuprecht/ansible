@@ -1,5 +1,0 @@
-- name: Install local
-  hosts:
-    - localhost
-  roles:
-    - golang

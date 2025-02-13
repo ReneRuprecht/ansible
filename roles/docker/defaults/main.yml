@@ -1,2 +1,19 @@
 ---
 # defaults file for docker
+docker_requirements_packages:
+  - ca-certificates
+  - curl
+  - gnupg
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+docker_release_channel: "stable"
+docker_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+
+docker_compose_version: "2.18.1"
+docker_compose_url: "https://github.com/docker/compose/releases/download/v{{ docker_compose_version }}/docker-compose-linux-x86_64"

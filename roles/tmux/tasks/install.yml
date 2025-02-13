@@ -6,16 +6,14 @@
   loop: "{{ tmux_packages }}"
 
 - name: Delete Old Plugin Manager
-  become: true
   ansible.builtin.file:
     state: absent
-    path: "/home/{{ ansible_user }}/.tmux.conf"
+    path: "$HOME/.tmux.conf"
 
 - name: Delete Old Plugin Manager
-  become: true
   ansible.builtin.file:
     state: absent
-    path: "/home/{{ ansible_user }}/.tmux/plugins/tpm"
+    path: "$HOME/.tmux/plugins/tpm"
 
 - name: Install Tmux Plugin Manager
   ansible.builtin.git:

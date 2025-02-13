@@ -11,10 +11,9 @@
   register: dotfiles
 
 - name: Delete Old Dotfiles
-  become: true
   ansible.builtin.file:
     state: absent
-    path: "/home/{{ ansible_user }}/.dotfiles"
+    path: "$HOME/.dotfiles"
   when:
     - dotfiles.stat.exists
     - dotfiles_force_reinstall

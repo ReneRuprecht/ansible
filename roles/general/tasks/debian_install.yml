@@ -1,0 +1,14 @@
+---
+- name: Update apt
+  become: true
+  ansible.builtin.apt:
+    force_apt_get: true
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install general packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ general_packages }}"

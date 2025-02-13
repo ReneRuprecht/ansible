@@ -1,26 +1,39 @@
 ---
-- name: Ensure clean install
-  become: true
-  ansible.builtin.file:
-    path: "{{ golang_path }}"
-    state: absent
+- name: Check go version
+  ansible.builtin.command:
+    cmd: 'go version'
+  changed_when: false
+  register: "golang_current_version"
 
-- name: Download golang
-  ansible.builtin.get_url:
-    url: "{{ golang_installer_url }}"
-    dest: "{{ golang_installer_temp_dest }}"
-    mode: "0644"
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ golang_current_version }} {{ golang_version }}"
 
-- name: Ensure directory exists
-  become: true
-  ansible.builtin.file:
-    path: "{{ golang_install_path }}"
-    state: directory
-    mode: "0755"
+- name: Install go
+  when: "golang_version not in golang_current_version.stdout"
+  block:
+    - name: Ensure clean install
+      become: true
+      ansible.builtin.file:
+        path: "{{ golang_path }}"
+        state: absent
 
-- name: Unzip golang
-  become: true
-  ansible.builtin.unarchive:
-    src: "{{ golang_installer_temp_dest }}"
-    dest: "{{ golang_install_path }}"
-    mode: "0755"
+    - name: Download golang
+      ansible.builtin.get_url:
+        url: "{{ golang_installer_url }}"
+        dest: "{{ golang_installer_temp_dest }}"
+        mode: "0644"
+
+    - name: Ensure directory exists
+      become: true
+      ansible.builtin.file:
+        path: "{{ golang_install_path }}"
+        state: directory
+        mode: "0755"
+
+    - name: Unzip golang
+      become: true
+      ansible.builtin.unarchive:
+        src: "{{ golang_installer_temp_dest }}"
+        dest: "{{ golang_install_path }}"
+        mode: "0755"

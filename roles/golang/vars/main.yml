@@ -1,5 +1,5 @@
 ---
-golang_path: "/home/{{ ansible_user }}/.local/go"
-golang_install_path: "/home/{{ ansible_user }}/.local"
+golang_path: "$HOME/.local/go"
+golang_install_path: "$HOME/.local"
 golang_installer_url: "https://go.dev/dl/go{{ golang_version }}.linux-amd64.tar.gz"
 golang_installer_temp_dest: "/tmp/golang-installer.tar.gz"
