@@ -22,4 +22,4 @@
     - zsh
     - docker
     - dotfiles
-    - terminal_theme
+    # - terminal_theme
