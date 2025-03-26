@@ -7,7 +7,6 @@
       editor: "nvim"
     virtual_users:
       - "{{ lookup('env', 'USER') }}"
-      # terminal_theme_env: "gnome"
   hosts:
     - localhost
   roles:
@@ -22,4 +21,3 @@
     - zsh
     - docker
     - dotfiles
-    # - terminal_theme
