@@ -1,7 +1,7 @@
 ---
 # defaults file for node
-node_version: 22
-node_nvm_version: "v0.40.1"
+node_version: 24
+node_nvm_version: "v0.40.3"
 node_nvm_download_dest: "/tmp/nvm_install.sh"
 node_npm_packages:
   - name: emmet-ls

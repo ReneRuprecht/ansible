@@ -4,6 +4,7 @@
     cmd: 'go version'
   changed_when: false
   register: "golang_current_version"
+  ignore_errors: true
 
 - name: Debug
   ansible.builtin.debug:

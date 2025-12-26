@@ -1,4 +1,5 @@
 - name: Install local
+  gather_facts: true
   vars:
     git_user:
       name: "test"
@@ -7,14 +8,14 @@
       editor: "nvim"
     virtual_users:
       - "{{ lookup('env', 'USER') }}"
-      # terminal_theme_env: "gnome"
+    terminal_theme_env: "gnome"
   hosts:
     - localhost
   roles:
-    - general
+    #- general
     - neovim
     - tmux
-    - virtual
+    #- virtual
     - vscode
     - git
     - node
@@ -22,4 +23,4 @@
     - zsh
     - docker
     - dotfiles
-    # - terminal_theme
+    - terminal_theme

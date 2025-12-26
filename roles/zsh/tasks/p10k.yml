@@ -8,7 +8,7 @@
   ansible.builtin.file:
     state: absent
     path: "$HOME/.p10k.zsh"
-  when: "'zsh_p10k_force_reinstall' in ansible_run_tags"
+  when: zsh_p10k_force_reinstall in ansible_run_tags
 
 - name: Check Old powerlevel10k
   ansible.builtin.stat:
@@ -19,7 +19,7 @@
   ansible.builtin.file:
     state: absent
     path: "$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
-  when: "'zsh_p10k_force_reinstall' in ansible_run_tags"
+  when: zsh_p10k_force_reinstall in ansible_run_tags
 
 - name: Ensure Theme Directory Exists
   ansible.builtin.file:
@@ -34,7 +34,7 @@
     depth: 1
   changed_when: false
   when: >
-    "'zsh_p10k_force_reinstall' in ansible_run_tags" or
+    zsh_p10k_force_reinstall in ansible_run_tags or
     (not zsh_old_p10k.stat.exists and
      not zsh_old_powerlevel10k.stat.exists)
 
@@ -43,6 +43,6 @@
     state: absent
     path: "$HOME/.zshrc"
   when: >
-    "'zsh_p10k_force_reinstall' in ansible_run_tags" or
+    zsh_p10k_force_reinstall in ansible_run_tags or
     (not zsh_old_p10k.stat.exists and
      not zsh_old_powerlevel10k.stat.exists)

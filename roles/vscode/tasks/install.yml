@@ -11,6 +11,7 @@
     mode: "0644"
 
 - name: Install Vscode
+  become: true
   ansible.builtin.command:
     cmd: "{{ vscode_install_command }} {{ vscode_download_path }}/{{ vscode_install_file_name }}"
 

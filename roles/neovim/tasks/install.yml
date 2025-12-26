@@ -22,12 +22,18 @@
     chdir: "$HOME/neovim"
 
 - name: Install neovim
+  become: true
   ansible.builtin.command:
     cmd: "make install"
   args:
-    chdir: "$HOME/neovim"
+    chdir: "/home/{{ lookup('env', 'USER') }}/neovim"
 
 - name: Install Python Neovim
   become: true
   ansible.builtin.package:
     name: python3-neovim
+
+- name: Install luarocks
+  become: true
+  ansible.builtin.package:
+    name: luarocks
