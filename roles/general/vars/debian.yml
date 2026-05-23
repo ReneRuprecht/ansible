@@ -1,7 +1,0 @@
----
-general_packages:
-  - i3
-  - polybar
-  - rofi
-  - feh
-  - alacritty

@@ -1,30 +1,28 @@
 ---
-- name: Install Nvm
-  when: 
-    - nvm_installed_version.rc != 0 or
-      nvm_installed_version.stdout != node_nvm_version
-  block:
-    - name: Download Nvm Install
-      ansible.builtin.get_url:
-        url: https://raw.githubusercontent.com/nvm-sh/nvm/{{ node_nvm_version }}/install.sh
-        dest: "{{ node_nvm_download_dest }}"
-        mode: "0755"
+- name: Install curl
+  become: true
+  ansible.builtin.package:
+    name: curl
+    state: present
 
-    - name: Install Nvm
-      ansible.builtin.command:
-        cmd: "{{ node_nvm_download_dest }}"
-      changed_when: false
+- name: Download nvm {{ node_nvm_version }}
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/nvm-sh/nvm/{{ node_nvm_version }}/install.sh
+    dest: "{{ node_nvm_download_dest }}"
+    mode: "0755"
 
-- name: Install Node
-  when: 
-    - node_installed_version.rc != 0 or
-      node_installed_version.stdout != node_version
-  block:
-    - name: Install Node
-      ansible.builtin.shell:
-        cmd: |
-          source ~/.nvm/nvm.sh
-          nvm install {{ node_version }}
-      args:
-        executable: /bin/bash
-      changed_when: false
+- name: Install nvm {{ node_nvm_version }}
+  ansible.builtin.command:
+    cmd: "{{ node_nvm_download_dest }}"
+    creates: "{{ ansible_facts['user_dir'] }}/.nvm/nvm.sh"
+
+- name: Install node {{ node_version }}
+  ansible.builtin.shell:
+    cmd: |
+      source ~/.nvm/nvm.sh
+      nvm install {{ node_version }}
+      nvm alias default {{ node_version }}
+    executable: /bin/bash
+  register: "node_install_output"
+  changed_when: "'is already installed' not in node_install_output.stderr"
+  failed_when: "'Now using node' not in node_install_output.stdout"

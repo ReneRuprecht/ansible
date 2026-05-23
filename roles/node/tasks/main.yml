@@ -1,8 +1,4 @@
 ---
-# tasks file for node
-- name: Include Check
-  ansible.builtin.include_tasks: "check.yml"
-
 - name: Include Install
   ansible.builtin.include_tasks: "install.yml"
 

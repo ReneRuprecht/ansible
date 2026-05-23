@@ -1,3 +1,6 @@
 ---
 # defaults file for tmux
-tmux_plugin_manager_dest: "~/.tmux/plugins/tpm"
+tmux_repo: "https://github.com/tmux-plugins/tpm"
+tmux_plugin_manager_version: "v3.1.0"
+
+tmux_plugin_manager_dest: "{{ ansible_facts['user_dir'] }}/.tmux/plugins/tpm"

@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  remote_user: molecule
+  pre_tasks:
+    - name: "[Debian] Update apt cache"
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+      when: ansible_facts.os_family == 'Debian'
+  roles:
+    - role: reneruprecht.zsh

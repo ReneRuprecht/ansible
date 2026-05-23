@@ -3,3 +3,4 @@
 dotfiles_repo_url: "https://github.com/ReneRuprecht/.dotfiles.git"
 dotfiles_required_packages:
   - "stow"
+  - "git"

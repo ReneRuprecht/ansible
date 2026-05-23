@@ -1,0 +1,47 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: roles/git/requirements.yml
+
+driver:
+  name: docker
+
+platforms:
+  - name: instance-debian13
+    image: "debian13-ansible:latest"
+    privileged: true
+    pre_build_image: true
+  - name: instance-ubuntu2604
+    image: "ubuntu2604-ansible:latest"
+    privileged: true
+    pre_build_image: true
+  - name: instance-fedora44
+    image: "fedora44-ansible:latest"
+    privileged: true
+    pre_build_image: true
+
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      instance-debian13:
+        git_config:
+          name: "test"
+          email: "test@test.test"
+          editor: "vim"
+      instance-ubuntu2604:
+        git_config:
+          name: "test"
+          email: "test@test.test"
+          editor: "vim"
+      instance-fedora44:
+        git_config:
+          name: "test"
+          email: "test@test.test"
+          editor: "vim"
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+verifier:
+  name: ansible

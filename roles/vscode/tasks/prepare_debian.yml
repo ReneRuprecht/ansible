@@ -1,0 +1,39 @@
+---
+- name: "[Debian] Install gpg"
+  become: true
+  ansible.builtin.package:
+    name: gpg
+    state: present
+
+- name: "[Debian] Download gpg Key"
+  ansible.builtin.get_url:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    dest: /tmp/microsoft.asc
+    mode: '0644'
+  register: microsoft_asc_key
+
+- name: "[Debian] Dearmor gpg Key"
+  become: true
+  ansible.builtin.command:
+    cmd: "gpg --dearmor -o /usr/share/keyrings/microsoft.gpg /tmp/microsoft.asc"
+    creates: /usr/share/keyrings/microsoft.gpg
+  when: microsoft_asc_key.changed
+
+- name: "[Debian] Add VSCode Repo"
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/vscode.sources
+    content: |
+      Types: deb
+      URIs: https://packages.microsoft.com/repos/code
+      Suites: stable
+      Components: main
+      Architectures: amd64,arm64,armhf
+      Signed-By: /usr/share/keyrings/microsoft.gpg
+    mode: '0644'
+
+- name: "[Debian] Update apt cache"
+  become: true
+  ansible.builtin.apt:
+    force_apt_get: true
+    update_cache: true

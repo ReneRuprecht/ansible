@@ -1,5 +1,13 @@
 ---
 # defaults file for neovim
-neovim_force_reconfiguration: false
+neovim_required_packages:
+  - unzip
+  - xsel # for clipboard
+  - ripgrep
+  - fd-find
 
-neovim_path: "~/"
+neovim_version: "v0.12.2"
+neovim_url: "https://github.com/neovim/neovim/releases/download/{{ neovim_version }}/nvim-linux-x86_64.tar.gz"
+neovim_temp_dest: "/tmp/neovim-{{ neovim_version }}.tar.gz"
+neovim_install_path: "/usr/local/neovim"
+neovim_install_path_bin: "/usr/local/neovim/bin"

@@ -1,0 +1,5 @@
+---
+# defaults file for jetbrains
+jetbrains_toolbox_build_version: "3.4.3.81140"
+jetbrains_toolbox_download_url: "https://download.jetbrains.com/toolbox/jetbrains-toolbox-{{ jetbrains_toolbox_build_version }}.tar.gz"
+jetbrains_toolbox_temp_dir: "/tmp/jetbrains_toolbox_install"

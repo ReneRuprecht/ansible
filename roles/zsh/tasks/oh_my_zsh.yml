@@ -1,22 +1,21 @@
 ---
+- name: Install git
+  become: true
+  ansible.builtin.package:
+    name: git
+    state: present
+
 - name: Download oh-my-zsh Installer
   ansible.builtin.get_url:
     url: "{{ zsh_oh_my_zsh_installer_url }}"
-    dest: "$HOME/.oh-my-installer"
+    dest: "{{ ansible_facts['user_dir'] }}/.oh-my-installer"
     mode: a+x
-
-- name: Check old old oh-my-zsh
-  ansible.builtin.stat:
-    path: "$HOME/.oh-my-zsh"
-  register: zsh_old_oh_my_zsh
 
 - name: Install oh-my-zsh
   ansible.builtin.shell:
-    cmd: echo "y" | "$HOME/.oh-my-installer"
-  changed_when: false
-  when: not zsh_old_oh_my_zsh.stat.exists
-
-- name: Remove old zshrc
-  ansible.builtin.file:
-    state: absent
-    path: "$HOME/.zshrc"
+    cmd: >
+      set -o pipefail &&
+      echo "y" |
+      "{{ ansible_facts['user_dir'] }}/.oh-my-installer"
+    executable: /bin/bash
+    creates: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"

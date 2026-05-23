@@ -1,0 +1,33 @@
+---
+- name: "[Debian] Download Docker gpg Key"
+  become: true
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+    force: true
+
+- name: "[Debian] Add Docker Repo"
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/docker.sources
+    content: |
+      Types: deb
+      URIs: {{ docker_debian_repo_url }}/{{ ansible_facts['distribution'] | lower }}
+      Suites: {{ ansible_facts['distribution_release'] }}
+      Components: {{ docker_release_channel }}
+      Architectures: {{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'amd64' }}
+      Signed-By: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: "[Debian] Update apt cache"
+  become: true
+  ansible.builtin.apt:
+    force_apt_get: true
+    update_cache: true
+
+- name: "[Debian] Install Docker Packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop: "{{ docker_debian_packages }}"

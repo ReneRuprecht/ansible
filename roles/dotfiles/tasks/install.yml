@@ -5,32 +5,16 @@
     state: present
   loop: "{{ dotfiles_required_packages }}"
 
-- name: Check Dotfiles Folder
-  ansible.builtin.stat:
-    path: "~/.dotfiles"
-  register: dotfiles
-
-- name: Delete Old Dotfiles
-  ansible.builtin.file:
-    state: absent
-    path: "$HOME/.dotfiles"
-  when:
-    - dotfiles.stat.exists
-    - dotfiles_force_reinstall
-
-- name: Cloning Dotfiles
+- name: Cloning dotfiles
   ansible.builtin.git:
     repo: "{{ dotfiles_repo_url }}"
-    dest: "~/.dotfiles"
+    dest: "{{ ansible_facts['user_dir'] }}/.dotfiles"
     update: true
     version: main
     accept_hostkey: true
-  when: >
-    not dotfiles.stat.exists or
-    dotfiles_force_reinstall
 
-- name: Stow Dotfiles
+- name: Stow dotfiles
   ansible.builtin.command:
     cmd: "stow ."
-    chdir: ~/.dotfiles
+    chdir: "{{ ansible_facts['user_dir'] }}/.dotfiles"
   changed_when: false

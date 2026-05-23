@@ -1,14 +1,6 @@
 ---
 # defaults file for node
 node_version: 24
-node_nvm_version: "v0.40.3"
-node_nvm_download_dest: "/tmp/nvm_install.sh"
-node_npm_packages:
-  - name: emmet-ls
-    global: true
-  - name: typescript-language-server
-    global: true
-  - name: typescript
-    global: true
-  - name: neovim
-    global: true
+node_nvm_version: "v0.40.4"
+node_nvm_download_dest: "/tmp/nvm_install_{{ node_nvm_version }}.sh"
+node_npm_packages: []

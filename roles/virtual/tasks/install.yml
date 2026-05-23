@@ -1,0 +1,20 @@
+---
+- name: Update apt cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: "ansible_facts['os_family'] | lower == 'debian'"
+
+- name: "[Debian] Install Qemu/Kvm"
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop: "{{ virtual_debian_packages }}"
+  when: "ansible_facts['os_family'] == 'Debian'"
+
+- name: "[RedHat] Install Qemu/Kvm"
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop: "{{ virtual_redhat_packages }}"
+  when: "ansible_facts['os_family'] == 'RedHat'"

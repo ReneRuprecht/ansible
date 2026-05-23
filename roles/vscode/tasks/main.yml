@@ -1,12 +1,17 @@
 ---
-- name: Include OS Vars
-  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+- name: "[Debian] Include Prepare"
+  ansible.builtin.include_tasks: "prepare_debian.yml"
+  when: "ansible_facts['os_family'] | lower == 'debian'"
 
-- name: Include Check
-  ansible.builtin.include_tasks: "check.yml"
+- name: "[RedHat] Include Prepare"
+  ansible.builtin.include_tasks: "prepare_redhat.yml"
+  when: "ansible_facts['os_family'] | lower == 'redhat'"
 
-- name: Include Install
-  ansible.builtin.include_tasks: "install.yml"
-  when: >
-    vscode_installed_version.rc != 0 or
-    vscode_force_reinstall
+- name: Install code
+  become: true
+  ansible.builtin.package:
+    name: code
+    state: present
+
+- name: Include Install Extensions
+  ansible.builtin.include_tasks: "install_extensions.yml"

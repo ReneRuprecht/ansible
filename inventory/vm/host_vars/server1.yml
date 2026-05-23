@@ -1,7 +1,5 @@
 ---
-git_user:
+git_config:
   name: "test"
   email: "test.email"
-
-git_core:
   editor: "nvim"

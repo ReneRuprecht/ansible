@@ -1,5 +1,6 @@
 ---
-- name: Install git
+- name: Install Git
   become: true
   ansible.builtin.package:
-    name: "{{ git_package }}"
+    name: git
+    state: present

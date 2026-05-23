@@ -1,15 +1,10 @@
 ---
-- name: Setup Editor
-  ansible.builtin.command:
-    cmd: "git config --global core.editor '{{ git_core.editor }}'"
-  when: git_editor_value.rc != 0
-
-- name: Setup Email
-  ansible.builtin.command:
-    cmd: "git config --global user.email '{{ git_user.email }}'"
-  when: git_email_value.rc != 0
-
-- name: Setup Name
-  ansible.builtin.command:
-    cmd: "git config --global user.name '{{ git_user.name }}'"
-  when: git_name_value.rc != 0
+- name: Setup Git Config
+  community.general.git_config:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    scope: global
+  loop:
+    - { name: 'user.name', value: "{{ git_config.name }}" }
+    - { name: 'user.email', value: "{{ git_config.email }}" }
+    - { name: 'core.editor', value: "{{ git_config.editor }}" }

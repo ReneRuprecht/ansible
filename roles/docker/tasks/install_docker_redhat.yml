@@ -1,0 +1,13 @@
+---
+- name: "[RedHat] Add Docker Repo"
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ docker_rhel_repo_url }}"
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'
+
+- name: "[RedHat] Install Docker Packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop: "{{ docker_redhat_packages }}"

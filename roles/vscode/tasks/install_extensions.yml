@@ -1,0 +1,15 @@
+---
+- name: Read Extensions
+  ansible.builtin.command:
+    cmd: "code --list-extensions"
+  register: installed_vscode_extensions
+  changed_when: false
+  failed_when: false
+
+- name: Install Extensions
+  ansible.builtin.command:
+    cmd: "code --install-extension {{ item }}"
+  loop: "{{ vscode_extensions }}"
+  when:
+    - item not in installed_vscode_extensions.stdout_lines
+  changed_when: item not in installed_vscode_extensions.stdout_lines

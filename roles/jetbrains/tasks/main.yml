@@ -1,0 +1,29 @@
+---
+- name: Create temporary directory for download
+  ansible.builtin.file:
+    path: "{{ jetbrains_toolbox_temp_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Download JetBrains Toolbox {{ jetbrains_toolbox_build_version }}
+  ansible.builtin.get_url:
+    url: "{{ jetbrains_toolbox_download_url }}"
+    dest: "{{ jetbrains_toolbox_temp_dir }}/jetbrains-toolbox-{{ jetbrains_toolbox_build_version }}.tar.gz"
+    mode: '0644'
+
+- name: Extract JetBrains Toolbox {{ jetbrains_toolbox_build_version }}
+  ansible.builtin.unarchive:
+    src: "{{ jetbrains_toolbox_temp_dir }}/jetbrains-toolbox-{{ jetbrains_toolbox_build_version }}.tar.gz"
+    dest: "{{ jetbrains_toolbox_temp_dir }}"
+    remote_src: true
+    creates: "{{ jetbrains_toolbox_temp_dir }}/jetbrains-toolbox-{{ jetbrains_toolbox_build_version }}"
+
+- name: Run JetBrains Toolbox installer
+  ansible.builtin.command:
+    cmd: "{{ jetbrains_toolbox_temp_dir }}/jetbrains-toolbox-{{ jetbrains_toolbox_build_version }}/bin/jetbrains-toolbox --install"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/share/JetBrains"
+
+- name: Clean up temporary installation directory
+  ansible.builtin.file:
+    path: "{{ jetbrains_toolbox_temp_dir }}"
+    state: absent

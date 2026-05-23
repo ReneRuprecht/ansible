@@ -1,8 +1,6 @@
 ---
 # defaults file for git
-git_user:
+git_config:
   name: ""
   email: ""
-
-git_core:
   editor: ""

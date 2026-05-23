@@ -1,26 +1,50 @@
 - name: Install local
   gather_facts: true
   vars:
-    git_user:
+    git_config:
       name: "test"
       email: "test.mail"
-    git_core:
       editor: "nvim"
-    virtual_users:
+    # virtual_users:
+    #   - "{{ lookup('env', 'USER') }}"
+    docker_users:
       - "{{ lookup('env', 'USER') }}"
-    terminal_theme_env: "gnome"
+    zsh_users:
+      - "{{ lookup('env', 'USER') }}"
+    vscode_extensions:
+      - "Catppuccin.catppuccin-vsc"
+      - "ms-vscode-remote.vscode-remote-extensionpack"
+      - "vscode-icons-team.vscode-icons"
+      - "Catppuccin.catppuccin-vsc-icons"
+      - "ms-azuretools.vscode-docker"
+      - "vscodevim.vim"
+      - "golang.go"
+      - "hashicorp.terraform"
+      - "bradlc.vscode-tailwindcss"
+      - "ms-vscode-remote.vscode-remote-extensionpack"
+      - "ms-python.black-formatter"
+      - "ms-python.debugpy"
+      - "ms-python.flake8"
+      - "ms-python.isort"
+      - "ms-python.pylint"
+      - "ms-python.python"
+      - "ms-python.vscode-pylance"
+      - "ms-python.vscode-python-envs"
+      - "alefragnani.Bookmarks"
+      - "github.vscode-github-actions"
+      - "esbenp.prettier-vscode"
+      - "redhat.vscode-yaml"
   hosts:
     - localhost
   roles:
-    #- general
-    - neovim
-    - tmux
-    #- virtual
-    - vscode
     - git
     - node
+    - neovim
+    - tmux
+    - vscode
     - golang
     - zsh
     - docker
+    - jetbrains
+    # - virtual
     - dotfiles
-    - terminal_theme

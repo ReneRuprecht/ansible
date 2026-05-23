@@ -1,0 +1,39 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+platforms:
+  - name: instance-debian13
+    image: "debian13-ansible:latest"
+    privileged: true
+    pre_build_image: true
+  - name: instance-ubuntu2604
+    image: "ubuntu2604-ansible:latest"
+    privileged: true
+    pre_build_image: true
+  - name: instance-fedora44
+    image: "fedora44-ansible:latest"
+    privileged: true
+    pre_build_image: true
+
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      instance-debian13:
+        vscode_extensions:
+          - "alefragnani.Bookmarks"
+      instance-ubuntu2604:
+        vscode_extensions:
+          - "alefragnani.Bookmarks"
+      instance-fedora44:
+        vscode_extensions:
+          - "alefragnani.Bookmarks"
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+verifier:
+  name: ansible

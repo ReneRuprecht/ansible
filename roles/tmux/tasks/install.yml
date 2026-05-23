@@ -1,21 +1,32 @@
 ---
-- name: Install Tmux
+- name: Install tmux
   become: true
   ansible.builtin.package:
     name: tmux
-  loop: "{{ tmux_packages }}"
+    state: present
 
-- name: Delete Old Plugin Manager
+- name: Install git
+  become: true
+  ansible.builtin.package:
+    name: git
+    state: present
+
+- name: Ensure tpm Directory Exists
   ansible.builtin.file:
-    state: absent
-    path: "$HOME/.tmux.conf"
+    path: "{{ tmux_plugin_manager_dest }}"
+    state: directory
+    mode: "0755"
 
-- name: Delete Old Plugin Manager
-  ansible.builtin.file:
-    state: absent
-    path: "$HOME/.tmux/plugins/tpm"
-
-- name: Install Tmux Plugin Manager
+- name: Install tpm {{ tmux_plugin_manager_version }}
   ansible.builtin.git:
     repo: "{{ tmux_repo }}"
     dest: "{{ tmux_plugin_manager_dest }}"
+    version: "{{ tmux_plugin_manager_version }}"
+
+- name: Ensure tpm exists in .tmux.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['user_dir'] }}/.tmux.conf"
+    line: "run '~/.tmux/plugins/tpm/tpm'"
+    regexp: "^run '~/.tmux/plugins/tpm/tpm'"
+    create: true
+    mode: '0644'

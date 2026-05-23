@@ -1,39 +1,32 @@
 ---
-- name: Remove old neovim
+- name: Download Neovim {{ neovim_version }}
+  ansible.builtin.get_url:
+    url: "{{ neovim_url }}"
+    dest: "{{ neovim_temp_dest }}"
+    mode: "0644"
+
+- name: Ensure Directory Exists
+  become: true
   ansible.builtin.file:
-    state: absent
-    path: "$HOME/neovim"
+    path: "{{ neovim_install_path }}"
+    state: directory
+    mode: "0755"
 
-- name: Clone Neovim
-  ansible.builtin.git:
-    repo: "{{ neovim_repo }}"
-    dest: "$HOME/neovim"
-    force: true
-
-- name: Checkout Neovim
-  ansible.builtin.command:
-    cmd: "git checkout stable"
-  args:
-    chdir: "$HOME/neovim"
-
-- name: Make Neovim
-  ansible.builtin.command:
-    cmd: "make CMAKE_BUILD_TYPE=RelWithDebInfo"
-    chdir: "$HOME/neovim"
-
-- name: Install neovim
+- name: Unzip Neovim
   become: true
-  ansible.builtin.command:
-    cmd: "make install"
-  args:
-    chdir: "/home/{{ lookup('env', 'USER') }}/neovim"
+  ansible.builtin.unarchive:
+    src: "{{ neovim_temp_dest }}"
+    dest: "{{ neovim_install_path }}"
+    mode: "0755"
+    remote_src: true
+    extra_opts:
+      - "--strip-components=1"
+    creates: "{{ neovim_install_path }}/bin"
 
-- name: Install Python Neovim
+- name: Update PATH
   become: true
-  ansible.builtin.package:
-    name: python3-neovim
-
-- name: Install luarocks
-  become: true
-  ansible.builtin.package:
-    name: luarocks
+  ansible.builtin.copy:
+    dest: /etc/profile.d/go.sh
+    content: |
+      export PATH=$PATH:{{ neovim_install_path_bin }}
+    mode: '0644'

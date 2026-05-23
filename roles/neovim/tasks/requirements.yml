@@ -1,5 +1,11 @@
 ---
-- name: Install Requirements
+- name: "[Debian] Update apt cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: "Install Requirements"
   become: true
   ansible.builtin.package:
     name: "{{ item }}"
